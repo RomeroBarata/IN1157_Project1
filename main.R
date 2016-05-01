@@ -1,9 +1,9 @@
 # Constants
-TRAIN_SEED <- 15476
+TRAIN_SEED <- 15476  # Make sure the comparison between models is fair
 
 # Read data into the workspace
 concrete <- read.csv(file.path("data", "Concrete_Data.csv"), header = TRUE)
-names(concrete)[ncol(concrete)] <- "out"
+names(concrete)[ncol(concrete)] <- "out"  # Make it easier to train the model
 
 # Setup the caret control objects
 library(caret)
@@ -11,9 +11,9 @@ fit_control <- trainControl(method = "repeatedcv",
                             number = 10, repeats = 5)
 
 # Enable for parallel computation
-# doMC::registerDoMC(cores = 3)
+if (Sys.info()[[1]] == "Linux") doMC::registerDoMC(cores = 2)
 
-# Train the glm model
+# Train the GLM model
 set.seed(TRAIN_SEED)
 glm_model <- train(out ~ ., data = concrete, 
                    method = "glm", 

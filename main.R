@@ -25,7 +25,7 @@ set.seed(TRAIN_SEED)
 svm_model <- train(out ~ ., data = concrete, 
                    method = "svmRadial", 
                    trControl = fit_control, 
-                   tuneLength = 3, 
+                   tuneGrid = expand.grid(C = 1, sigma = 0.1240874), 
                    preProc = c("center", "scale"))
 
 # Define HyFIS parameters
